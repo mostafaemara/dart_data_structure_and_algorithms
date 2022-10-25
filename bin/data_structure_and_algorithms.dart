@@ -3,7 +3,13 @@ import 'package:data_structure_and_algorithms/tree.dart';
 void main(List<String> arguments) {
   final tree = makeTree();
 
-  tree.forEachLevelOrder((node) => print(node.value));
+  final result = tree.forEachLevelOrder(
+    (node) {
+      if (node.childern.isNotEmpty) {
+        print(node.childern.toString());
+      }
+    },
+  );
 }
 
 TreeNode<String> makeTree() {

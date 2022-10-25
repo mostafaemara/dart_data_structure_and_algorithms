@@ -20,12 +20,29 @@ class TreeNode<T> {
     final queue = QueueStack<TreeNode<T>>();
     performAction(this);
     childern.forEach(queue.enqueue);
+
     var node = queue.dequeue();
     while (node != null) {
       performAction(node);
 
       node.childern.forEach(queue.enqueue);
+
       node = queue.dequeue();
     }
+  }
+
+  TreeNode<T>? search(T value) {
+    TreeNode<T>? result;
+    forEachLevelOrder((node) {
+      if (node.value == value) {
+        result = node;
+      }
+    });
+    return result;
+  }
+
+  @override
+  String toString() {
+    return "$value ";
   }
 }
