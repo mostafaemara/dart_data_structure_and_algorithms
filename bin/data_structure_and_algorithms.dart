@@ -1,44 +1,58 @@
+import 'package:data_structure_and_algorithms/binary_node.dart';
+import 'package:data_structure_and_algorithms/binary_search_tree.dart';
+import 'package:data_structure_and_algorithms/queue.dart';
 import 'package:data_structure_and_algorithms/tree.dart';
 
 void main(List<String> arguments) {
-  final tree = makeTree();
+  final root = BinarySearchTree();
 
-  final result = tree.forEachLevelOrder(
-    (node) {
-      if (node.childern.isNotEmpty) {
-        print(node.childern.toString());
-      }
-    },
-  );
+  for (var i = 0; i < 5; i++) {
+    root.insert(i);
+  }
+
+  print(root);
 }
 
-TreeNode<String> makeTree() {
-  final tree = TreeNode("Beveragers");
-  final hot = TreeNode("Hot");
-  final cold = TreeNode("Cold");
-  final tea = TreeNode("Tea");
-  final coffee = TreeNode("Coffe");
-  final chocolate = TreeNode("Chocolate");
-  final blackTea = TreeNode("BlackTea");
-  final greenTea = TreeNode("GreenTea");
-  final chaiTea = TreeNode("CHaiTea");
-  final soda = TreeNode("Soda");
-  final milk = TreeNode("Milk");
-  final gingerAle = TreeNode("ginger Ale");
-  final bitterLemon = TreeNode("Bitter Lemon");
+int calculateHeightOfTree<T>(BinaryNode<T>? tree) {
+  if (tree == null) {
+    return 0;
+  }
 
-  tree.add(hot);
-  tree.add(cold);
-  hot.add(tea);
-  hot.add(coffee);
-  hot.add(chocolate);
-  cold.add(soda);
-  cold.add(milk);
-  tea.add(blackTea);
-  tea.add(greenTea);
-  tea.add(chaiTea);
-  soda.add(gingerAle);
-  soda.add(bitterLemon);
+  if (tree.leftChild == null && tree.rightChild == null) {
+    return 0;
+  }
 
-  return tree;
+  int leftHeight = calculateHeightOfTree(tree.leftChild) + 1;
+  int rightHeight = calculateHeightOfTree(tree.rightChild) + 1;
+
+  if (leftHeight > rightHeight) {
+    return leftHeight;
+  } else {
+    return rightHeight;
+  }
+}
+
+void printEachLevel<T>(TreeNode<T> tree) {
+  final result = StringBuffer();
+  var queue = QueueStack<TreeNode<T>>();
+  var nodesLeftInCurrentLevel = 0;
+  queue.enqueue(tree);
+  while (!queue.isEmpty) {
+    nodesLeftInCurrentLevel = queue.length;
+
+    while (nodesLeftInCurrentLevel > 0) {
+      final node = queue.dequeue();
+      if (node == null) break;
+      result.write('${node.value} ');
+      for (var element in node.childern) {
+        queue.enqueue(element);
+      }
+
+      nodesLeftInCurrentLevel -= 1;
+    }
+
+    result.write('\n');
+  }
+
+  print(result);
 }

@@ -46,3 +46,18 @@ class TreeNode<T> {
     return "$value ";
   }
 }
+
+abstract class Widget {}
+
+class Column extends Widget {
+  Column({required this.childern});
+  final List<Widget> childern;
+}
+
+class Padding extends Widget {
+  final Widget child;
+
+  Padding({required this.child});
+}
+
+class Text extends Widget {}

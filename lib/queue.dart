@@ -107,4 +107,6 @@ class QueueStack<E> implements Queue<E> {
 
     return "[$combined]";
   }
+
+  int get length => _leftStack.length + _rightStack.length;
 }
