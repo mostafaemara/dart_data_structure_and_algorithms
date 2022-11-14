@@ -1,25 +1,23 @@
 import 'package:data_structure_and_algorithms/binary_node.dart';
 import 'package:data_structure_and_algorithms/queue.dart';
+import 'package:data_structure_and_algorithms/string_trie.dart';
 import 'package:data_structure_and_algorithms/tree.dart';
 
 void main(List<String> arguments) {
-  final root1 = BinaryNode<int>(5);
-  final root2 = BinaryNode<int>(5);
-  var left1 = BinaryNode<int>(15);
+  final trie = StringTrie();
+  trie.insert("Sasa");
+  trie.insert("Sasaman");
+  assert(trie.contains("Sasa"));
+  print("sasa is in trie");
+  assert(trie.contains("Sasaman"));
+  print("sasaman is in trie");
 
-  var right1 = BinaryNode<int>(1);
-  var left2 = BinaryNode<int>(1);
-  var right2 = BinaryNode<int>(1);
-  var left3 = BinaryNode<int>(12);
-  var right3 = BinaryNode<int>(3);
+  trie.remove("Sasa");
 
-  root1.leftChild = left1;
-  root1.rightChild = right1;
-  right1.leftChild = left2;
-  right1.rightChild = right2;
-  root2.leftChild = left3;
-  root2.rightChild = right3;
-  print(isEqual(root1, root2));
+  assert(!trie.contains("Sasa"));
+
+  assert(trie.contains("Sasaman"));
+  print("sasaman is in trie");
 }
 
 int calculateHeightOfTree<T>(BinaryNode<T>? tree) {
