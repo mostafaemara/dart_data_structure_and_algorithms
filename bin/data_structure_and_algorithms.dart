@@ -1,6 +1,7 @@
+import 'package:data_structure_and_algorithms/selection_sort.dart';
+
 void main(List<String> arguments) {
-  final result = 10 ~/ 3;
-  final result2 = 10 / 3;
-  print(result);
-  print(result2);
+  final list = [10, 6, 3, 12, 5, 1, 7, 4, 2, 8, 9];
+  selectionSort(list);
+  print(list);
 }

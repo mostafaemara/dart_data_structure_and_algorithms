@@ -185,3 +185,25 @@ bool isMinHeap<E extends Comparable>(List<E> list) {
   }
   return true;
 }
+
+class Person extends Comparable<Person> {
+  final String name;
+  final int age;
+  final bool isMilitary;
+
+  Person({required this.name, required this.age, required this.isMilitary});
+
+  @override
+  int compareTo(other) {
+    if (isMilitary == other.isMilitary) {
+      return age.compareTo(other.age);
+    }
+
+    return isMilitary ? 1 : -1;
+  }
+
+  @override
+  String toString() {
+    return "Name:$name Has Military Background:$isMilitary Age:$age";
+  }
+}
