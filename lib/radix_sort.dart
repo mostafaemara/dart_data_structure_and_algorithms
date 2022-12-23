@@ -1,3 +1,5 @@
+import 'dart:math';
+
 extension RadixSort on List<int> {
   void radixSort() {
     const base = 10;
@@ -24,5 +26,29 @@ extension RadixSort on List<int> {
       clear();
       addAll(buckets.expand((element) => element));
     }
+  }
+}
+
+extension Digits on int {
+  static const _base = 10;
+  int digits() {
+    int count = 0;
+    var number = this;
+
+    while (number != 0) {
+      count++;
+      number ~/= _base;
+    }
+    return count;
+  }
+
+  int? digitsAt(int position) {
+    if (position >= digits()) return null;
+    var number = this;
+    while (number ~/ pow(_base, position + 1) != 0) {
+      number ~/= _base;
+    }
+
+    return number % _base;
   }
 }
