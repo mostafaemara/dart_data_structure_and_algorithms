@@ -52,3 +52,43 @@ extension Digits on int {
     return number % _base;
   }
 }
+
+extension MsdRadixSort on List<int> {
+  int maxDigits() {
+    if (isEmpty) return 0;
+    return reduce(max).digits();
+  }
+
+  void lexicographicalSort() {
+    final sorted = _msdRadixSorted(this, 0);
+    clear();
+    addAll(sorted);
+  }
+
+  List<int> _msdRadixSorted(List<int> list, int position) {
+    if (list.length < 2 || position >= list.maxDigits()) {
+      return list;
+    }
+    final buckets = List.generate(
+      10,
+      (_) => <int>[],
+    );
+    var priorityBucket = <int>[];
+
+    for (final number in list) {
+      final digit = number.digitsAt(position);
+      if (digit == null) {
+        priorityBucket.add(number);
+        continue;
+      }
+      buckets[digit].add(number);
+    }
+    final bucketOrder = buckets.reduce((result, bucket) {
+      if (buckets.isEmpty) return result;
+      final sortedList = _msdRadixSorted(bucket, position + 1);
+      return result..addAll(sortedList);
+    });
+
+    return priorityBucket..addAll(bucketOrder);
+  }
+}
