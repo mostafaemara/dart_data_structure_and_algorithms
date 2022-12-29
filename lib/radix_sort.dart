@@ -3,24 +3,24 @@ import 'dart:math';
 extension RadixSort on List<int> {
   void radixSort() {
     const base = 10;
-    bool done = false;
+    var remainingNotSorted = length;
 
     var place = 1;
 
-    while (!done) {
-      done = true;
+    while (remainingNotSorted > 1) {
       final buckets = List.generate(base, (index) => <int>[]);
-
+      remainingNotSorted = length;
       forEach((number) {
         final remainingPart = number ~/ place;
 
         final digit = remainingPart % base;
         buckets[digit].add(number);
 
-        if (remainingPart ~/ base > 0) {
-          done = false;
+        if (remainingPart ~/ base == 0) {
+          remainingNotSorted--;
         }
       });
+      print(buckets);
 
       place *= base;
       clear();
@@ -83,6 +83,7 @@ extension MsdRadixSort on List<int> {
       }
       buckets[digit].add(number);
     }
+    print(buckets);
     final bucketOrder = buckets.reduce((result, bucket) {
       if (buckets.isEmpty) return result;
       final sortedList = _msdRadixSorted(bucket, position + 1);
