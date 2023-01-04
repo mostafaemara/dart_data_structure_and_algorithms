@@ -11,3 +11,34 @@ List<E> quicksortNaive<E extends Comparable<dynamic>>(List<E> list) {
     ...quicksortNaive(greater.toList())
   ];
 }
+
+extension Swappable<E> on List<E> {
+  void swap(int indexA, int indexB) {
+    if (indexA == indexB) return;
+    final temp = this[indexA];
+    this[indexA] = this[indexB];
+    this[indexB] = temp;
+  }
+}
+
+int _partitionLomuto<E extends Comparable<dynamic>>(
+    List<E> list, int low, int hight) {
+  final pivot = list[hight];
+  var pivotIndex = low;
+  for (int i = low; i < hight; i++) {
+    if (list[i].compareTo(pivot) <= 0) {
+      list.swap(i, pivotIndex);
+      pivotIndex += 1;
+    }
+  }
+  list.swap(pivotIndex, hight);
+  return pivotIndex;
+}
+
+void quickSortLomuto<E extends Comparable<dynamic>>(
+    List<E> list, int low, int hight) {
+  if (low >= hight) return;
+  final pivotIndex = _partitionLomuto(list, low, hight);
+  quickSortLomuto(list, low, pivotIndex - 1);
+  quickSortLomuto(list, pivotIndex + 1, hight);
+}
