@@ -42,3 +42,33 @@ void quickSortLomuto<E extends Comparable<dynamic>>(
   quickSortLomuto(list, low, pivotIndex - 1);
   quickSortLomuto(list, pivotIndex + 1, hight);
 }
+
+void quickSortHoare<E extends Comparable<dynamic>>(
+    List<E> list, int low, int hight) {
+  if (low >= hight) return;
+  final highLeft = _partitionHoare(list, low, hight);
+  quickSortHoare(list, low, highLeft);
+  quickSortHoare(list, highLeft + 1, hight);
+}
+
+int _partitionHoare<E extends Comparable<dynamic>>(
+    List<E> list, int low, int hight) {
+  final pivot = list[low];
+  var left = low - 1;
+  var right = hight + 1;
+
+  while (true) {
+    do {
+      left += 1;
+    } while (list[left].compareTo(pivot) < 0);
+
+    do {
+      right -= 1;
+    } while (list[right].compareTo(pivot) > 0);
+    if (left < right) {
+      list.swap(left, right);
+    } else {
+      return right;
+    }
+  }
+}
