@@ -1,3 +1,10 @@
+class Range {
+  final int low;
+  final int high;
+
+  Range(this.low, this.high);
+}
+
 List<E> quicksortNaive<E extends Comparable<dynamic>>(List<E> list) {
   if (list.length < 2) return list;
   final pivot = list[0];
@@ -96,4 +103,35 @@ int _medianOfThree<T extends Comparable<dynamic>>(
     list.swap(center, high);
   }
   return center;
+}
+
+void quickSortDutchFlag<E extends Comparable<dynamic>>(
+    List<E> list, int low, int high) {
+  if (low >= high) return;
+  final middel = _partitionDutchFlag(list, low, high);
+  quickSortDutchFlag(list, low, middel.low - 1);
+  quickSortDutchFlag(list, middel.high + 1, high);
+}
+
+Range _partitionDutchFlag<E extends Comparable<dynamic>>(
+    List<E> list, int low, int high) {
+  final pivot = list[high];
+
+  var smaller = low;
+  var equal = low;
+  var larger = high;
+
+  while (equal <= larger) {
+    if (list[equal].compareTo(pivot) < 0) {
+      list.swap(smaller, equal);
+      smaller += 1;
+      equal += 1;
+    } else if (list[equal] == pivot) {
+      equal += 1;
+    } else {
+      list.swap(equal, larger);
+      larger -= 1;
+    }
+  }
+  return Range(smaller, larger);
 }
