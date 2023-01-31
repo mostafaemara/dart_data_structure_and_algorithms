@@ -81,3 +81,73 @@ class AdjacencyList<E> implements Graph<E> {
     return result.toString();
   }
 }
+
+class AdjacencyMatrix<E> implements Graph<E> {
+  final List<Vertex<E>> _vertices = [];
+  final List<List<double?>?> _weights = [];
+  var _nextIndex = 0;
+  @override
+  void addEdge(Vertex<E> source, Vertex<E> destination,
+      {EdgeType edgeType = EdgeType.undirected, double? weight}) {
+    _weights[source.index]?[destination.index] = weight;
+    if (edgeType == EdgeType.undirected) {
+      _weights[destination.index]?[source.index] = weight;
+    }
+  }
+
+  @override
+  Vertex<E> createVertex(E data) {
+    final vertex = Vertex<E>(index: _nextIndex, data: data);
+    _vertices.add(vertex);
+    _nextIndex++;
+
+    for (var i = 0; i < _weights.length; i++) {
+      _weights[i]?.add(null);
+    }
+    final row = List<double?>.filled(_vertices.length, null, growable: true);
+    _weights.add(row);
+    return vertex;
+  }
+
+  @override
+  List<Edge<E>> edges(Vertex<E> source) {
+    List<Edge<E>> edges = [];
+    for (var column = 0; column < _weights.length; column++) {
+      final weight = _weights[source.index]?[column];
+      if (weight == null) {
+        continue;
+      }
+      final destination = _vertices[column];
+
+      edges.add(Edge(source: source, destination: destination, weight: weight));
+    }
+    return edges;
+  }
+
+  @override
+  // TODO: implement vertices
+  Iterable<Vertex<E>> get vertices => _vertices;
+
+  @override
+  double? weight(Vertex<E> source, Vertex<E> destination) {
+    return _weights[source.index]?[destination.index];
+  }
+
+  @override
+  String toString() {
+    final output = StringBuffer();
+    for (final vertex in _vertices) {
+      output.writeln("${vertex.index}: ${vertex.data}");
+    }
+
+    for (int i = 0; i < _weights.length; i++) {
+      for (int j = 0; i < _weights.length; j++) {
+        final value = (_weights[i]?[j] ?? ".").toString();
+        output.write(value.padLeft(6));
+      }
+      output.writeln();
+    }
+
+    return output.toString();
+  }
+}
