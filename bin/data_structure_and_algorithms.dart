@@ -1,27 +1,29 @@
+import 'package:data_structure_and_algorithms/breadth_first_search.dart';
 import 'package:data_structure_and_algorithms/graph.dart';
 
 void main(List<String> arguments) {
   final graph = AdjacencyList<String>();
-  final singapore = graph.createVertex('Singapore');
-  final tokyo = graph.createVertex('Tokyo');
-  final hongKong = graph.createVertex('HongKong');
-  final detroit = graph.createVertex('Detroit');
-  final sanFrancisco = graph.createVertex('SanFrancisco');
-  final washingtonDc = graph.createVertex('Washington Dc');
-  final austinTexas = graph.createVertex('Austin Texas');
-  final seattle = graph.createVertex('Seattle');
+  final megan = graph.createVertex('Megan');
+  final sandra = graph.createVertex('sandra');
+  final pablo = graph.createVertex('pablo');
+  final edith = graph.createVertex('edith');
+  final ray = graph.createVertex('ray');
+  final luke = graph.createVertex('luke');
+  final manda = graph.createVertex('manda');
+  final vicki = graph.createVertex('vicki');
 
-  graph.addEdge(singapore, hongKong, weight: 300);
-  graph.addEdge(singapore, tokyo, weight: 500);
-  graph.addEdge(hongKong, tokyo, weight: 250);
-  graph.addEdge(tokyo, detroit, weight: 450);
-  graph.addEdge(tokyo, washingtonDc, weight: 300);
-  graph.addEdge(hongKong, sanFrancisco, weight: 600);
-  graph.addEdge(detroit, austinTexas, weight: 50);
-  graph.addEdge(austinTexas, washingtonDc, weight: 292);
-  graph.addEdge(sanFrancisco, washingtonDc, weight: 337);
-  graph.addEdge(washingtonDc, seattle, weight: 277);
-  graph.addEdge(sanFrancisco, seattle, weight: 218);
-  graph.addEdge(austinTexas, sanFrancisco, weight: 297);
-  print(graph);
+  graph.addEdge(megan, sandra, weight: 0);
+  graph.addEdge(megan, pablo, weight: 0);
+  graph.addEdge(megan, edith, weight: 0);
+
+  graph.addEdge(pablo, ray, weight: 0);
+  graph.addEdge(pablo, luke, weight: 0);
+
+  graph.addEdge(edith, manda, weight: 0);
+  graph.addEdge(edith, vicki, weight: 0);
+
+  graph.addEdge(manda, pablo, weight: 0);
+  graph.addEdge(manda, megan, weight: 0);
+  final vertices = graph.breadthFirstSearch(megan);
+  vertices.forEach(print);
 }

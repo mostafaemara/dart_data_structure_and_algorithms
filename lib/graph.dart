@@ -141,9 +141,9 @@ class AdjacencyMatrix<E> implements Graph<E> {
     }
 
     for (int i = 0; i < _weights.length; i++) {
-      for (int j = 0; i < _weights.length; j++) {
+      for (int j = 0; j < _weights.length; j++) {
         final value = (_weights[i]?[j] ?? ".").toString();
-        output.write(value.padLeft(6));
+        output.write(value.padRight(6));
       }
       output.writeln();
     }
